@@ -1,0 +1,39 @@
+<%@ Master Language="C#" %>
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server">Mini Site</asp:ContentPlaceHolder></title>
+    <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+    <form runat="server">
+        <header>
+            <div class="container">
+                <h1>Mini Site</h1>
+                <nav>
+                    <a href="HomePage.aspx">Home</a>
+                    <a href="Registration.aspx">Register</a>
+                    <a href="About.aspx">About</a>
+                    <a href="Contact.aspx">Contact</a>
+                    <a href="Services.aspx">Services</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="container">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 Mini Site</p>
+            </div>
+        </footer>
+    </form>
+</body>
+</html>
+

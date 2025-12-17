@@ -1,4 +1,4 @@
-<%@ Page Title="Home" MasterPageFile="~/master.MasterPage" Language="C#" %>
+<%@ Page Title="Home" MasterPageFile="~/master.master" Language="C#" %>
 <asp:Content ID="TitleContent" ContentPlaceHolderID="TitleContent" runat="server">Home</asp:Content>
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Welcome to the Mini Site</h2>
