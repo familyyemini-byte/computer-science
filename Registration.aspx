@@ -37,15 +37,20 @@
             <tr>
                 <td><label id="LabelGender" name="LabelGender">Gender</label></td>
                 <td>
-                    <!-- Radio buttons: grouped with name="Gender"; ids are unique -->
-                    <input type="radio" id="GenderMale" name="Gender" value="Male" checked />
-                    <label for="GenderMale" id="LabelGenderMale" name="LabelGenderMale">Male</label>
-                    &nbsp;&nbsp;
-                    <input type="radio" id="GenderFemale" name="Gender" value="Female" />
-                    <label for="GenderFemale" id="LabelGenderFemale" name="LabelGenderFemale">Female</label>
-                    &nbsp;&nbsp;
-                    <input type="radio" id="GenderOther" name="Gender" value="Other" />
-                    <label for="GenderOther" id="LabelGenderOther" name="LabelGenderOther">Other</label>
+                    <div class="radio-group">
+                        <label class="radio-item" for="GenderMale">
+                            <input type="radio" id="GenderMale" name="Gender" value="Male" checked />
+                            <span>Male</span>
+                        </label>
+                        <label class="radio-item" for="GenderFemale">
+                            <input type="radio" id="GenderFemale" name="Gender" value="Female" />
+                            <span>Female</span>
+                        </label>
+                        <label class="radio-item" for="GenderOther">
+                            <input type="radio" id="GenderOther" name="Gender" value="Other" />
+                            <span>Other</span>
+                        </label>
+                    </div>
                 </td>
             </tr>
             <tr>

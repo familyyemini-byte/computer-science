@@ -114,6 +114,20 @@ input[type="checkbox"] {
     margin-right: 0.5rem;
 }
 
+/* Radio group styling for aligned radio buttons */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.radio-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
 button {
     background-color: #333;
     color: #fff;
