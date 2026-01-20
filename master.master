@@ -12,10 +12,20 @@
     <form runat="server">
         <header>
             <div class="container">
-                <div class="branding">
-                    <img src="Images/logo.svg" alt="Mini Site logo" class="site-logo" />
-                    <h1>Mini Site</h1>
+                <div class="branding" role="banner" aria-label="Site logo">
+                    <svg class="site-logo" viewBox="0 0 900 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Used Cars logo">
+                        <title>UsedCars - Quality Pre-owned Vehicles</title>
+                        <!-- simple car silhouette and text for lightweight logo -->
+                        <g transform="translate(0,10)">
+                            <path d="M70 80 C90 50 160 50 200 80 L700 80 C740 50 810 50 830 80 L860 100 L860 110 L60 110 L60 100 Z" fill="#ffffff" opacity="0.95"/>
+                            <circle cx="220" cy="110" r="18" fill="#222"/>
+                            <circle cx="620" cy="110" r="18" fill="#222"/>
+                        </g>
+                        <text x="50%" y="55" font-family="Arial, Helvetica, sans-serif" font-size="44" fill="#ffffff" text-anchor="middle">UsedCars</text>
+                        <text x="50%" y="85" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle">Quality Pre-owned Vehicles</text>
+                    </svg>
                 </div>
+
                 <nav>
                     <a href="HomePage.aspx">Home</a>
                     <a href="Registration.aspx">Register</a>
