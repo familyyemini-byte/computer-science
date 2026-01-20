@@ -12,7 +12,10 @@
     <form runat="server">
         <header>
             <div class="container">
-                <h1>Mini Site</h1>
+                <div class="branding">
+                    <img src="Images/logo.svg" alt="Mini Site logo" class="site-logo" />
+                    <h1>Mini Site</h1>
+                </div>
                 <nav>
                     <a href="HomePage.aspx">Home</a>
                     <a href="Registration.aspx">Register</a>

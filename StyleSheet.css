@@ -27,6 +27,21 @@ nav {
     gap: 2rem;
 }
 
+/* Branding/logo */
+.branding {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.site-logo {
+    width: 120px;
+    height: auto;
+    display: block;
+}
+
 nav a {
     color: #fff;
     text-decoration: none;
