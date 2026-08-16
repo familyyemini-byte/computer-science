@@ -1,6 +1,25 @@
-<%@ Page Title="About" MasterPageFile="~/master.master" Language="C#" %>
-<asp:Content ID="TitleContent" ContentPlaceHolderID="TitleContent" runat="server">About</asp:Content>
-<asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About - Mini Site</title>
+    <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="HomePage.aspx">Home</a>
+                <a href="Registration.aspx">Register</a>
+                <a href="About.aspx">About</a>
+                <a href="Contact.aspx">Contact</a>
+                <a href="Services.aspx">Services</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
     <h2>About AutoHub Used Cars</h2>
 
     <p>AutoHub is a family-owned used-car dealership founded in 2009. We specialize in carefully inspected, high-quality pre-owned vehicles at fair prices. Our mission is to make car buying simple, transparent and trustworthy.</p>
@@ -35,10 +54,17 @@
     <section>
         <h3>Featured Vehicles</h3>
         <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-            <img src="Images/car1.jpg" alt="Featured car 1" style="width:30%;max-width:260px;height:auto;border-radius:6px;" />
-            <img src="Images/car2.jpg" alt="Featured car 2" style="width:30%;max-width:260px;height:auto;border-radius:6px;" />
-            <img src="Images/car3.jpg" alt="Featured car 3" style="width:30%;max-width:260px;height:auto;border-radius:6px;" />
+            <img src="Images/car1.webp" alt="Featured car 1" style="width:30%;max-width:260px;height:auto;border-radius:6px;" />
+            <img src="Images/car2.webp" alt="Featured car 2" style="width:30%;max-width:260px;height:auto;border-radius:6px;" />
+            <img src="Images/car3.webp" alt="Featured car 3" style="width:30%;max-width:260px;height:auto;border-radius:6px;" />
         </div>
     </section>
+    </main>
 
-</asp:Content>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Mini Site</p>
+        </div>
+    </footer>
+</body>
+</html>

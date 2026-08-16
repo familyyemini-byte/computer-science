@@ -1,6 +1,25 @@
-<%@ Page Title="Registration" MasterPageFile="~/master.master" Language="C#" %>
-<asp:Content ID="TitleContent" ContentPlaceHolderID="TitleContent" runat="server">Registration</asp:Content>
-<asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registration - Mini Site</title>
+    <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="HomePage.aspx">Home</a>
+                <a href="Registration.aspx">Register</a>
+                <a href="About.aspx">About</a>
+                <a href="Contact.aspx">Contact</a>
+                <a href="Services.aspx">Services</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
     <h2>Registration</h2>
     <p>Please fill in the form to create an account.</p>
 
@@ -72,4 +91,12 @@
 
     <p style="font-size:0.9rem;color:#666;margin-top:1rem;">Notes: Radio buttons and dropdown list are included as required. Each input/select has matching `id` and `name` (radio buttons share the same name `Gender` to group them).</p>
 
-</asp:Content>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Mini Site</p>
+        </div>
+    </footer>
+</body>
+</html>

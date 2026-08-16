@@ -1,6 +1,25 @@
-<%@ Page Title="Services" MasterPageFile="~/master.master" Language="C#" %>
-<asp:Content ID="TitleContent" ContentPlaceHolderID="TitleContent" runat="server">Services</asp:Content>
-<asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Services - Mini Site</title>
+    <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="HomePage.aspx">Home</a>
+                <a href="Registration.aspx">Register</a>
+                <a href="About.aspx">About</a>
+                <a href="Contact.aspx">Contact</a>
+                <a href="Services.aspx">Services</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
     <h2>Our Services</h2>
 
     <p>AutoHub offers a full range of services to keep your vehicle running and to make buying or selling a car easy.</p>
@@ -76,4 +95,12 @@
         </form>
     </section>
 
-</asp:Content>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Mini Site</p>
+        </div>
+    </footer>
+</body>
+</html>
