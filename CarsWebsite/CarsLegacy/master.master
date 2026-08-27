@@ -29,29 +29,27 @@
                 <nav>
                     <a href="HomePage.aspx">Home</a>
                     <a href="Registration.aspx">Register</a>
+                    <asp:HyperLink ID="MasterNavUsersLink" runat="server" NavigateUrl="~/Users.aspx" Visible="false">Users</asp:HyperLink>
                     <a href="About.aspx">About</a>
                     <a href="Contact.aspx">Contact</a>
                     <a href="Services.aspx">Services</a>
                 </nav>
 
-                <asp:Panel ID="MasterLoginPanel" runat="server">
+                <asp:Panel ID="MasterLoginPanel" runat="server" CssClass="master-login">
                     <asp:TextBox ID="MasterEmailTextBox" runat="server" TextMode="Email" placeholder="Email" />
                     <asp:TextBox ID="MasterPasswordTextBox" runat="server" TextMode="Password" placeholder="Password" />
                     <asp:Button ID="MasterLoginButton" runat="server" Text="Login" OnClick="MasterLoginButton_Click" />
                     <asp:Label ID="MasterLoginStatusLabel" runat="server" />
                 </asp:Panel>
 
-                <asp:Panel ID="MasterUserPanel" runat="server" Visible="false">
+                <asp:Panel ID="MasterUserPanel" runat="server" Visible="false" CssClass="master-user-panel">
                     <p>
-                        ????,
+                        Hello,
                         <asp:Literal ID="MasterUserNameLiteral" runat="server" />
                         |
-                        <a href="ChangePassword.aspx">????? ?????</a>
+                        <a href="ChangePassword.aspx">Change password</a>
                         |
-                        <a href="Logout.aspx">???????</a>
-                        <asp:PlaceHolder ID="MasterUsersPageLinkPlaceholder" runat="server" Visible="false">
-                            | <a href="Users.aspx">?? ???????</a>
-                        </asp:PlaceHolder>
+                        <a href="Logout.aspx">Logout</a>
                     </p>
                 </asp:Panel>
             </div>
@@ -123,7 +121,7 @@
 
         MasterUserNameLiteral.Text = Server.HtmlEncode(currentUser);
         var isAdmin = Session["IsAdmin"] is bool && (bool)Session["IsAdmin"];
-        MasterUsersPageLinkPlaceholder.Visible = isAdmin;
+        MasterNavUsersLink.Visible = isAdmin;
     }
 </script>
 

@@ -17,6 +17,9 @@
                 <a href="About.aspx">About</a>
                 <a href="Contact.aspx">Contact</a>
                 <a href="Services.aspx">Services</a>
+                <% if (Session["IsAdmin"] is bool && (bool)Session["IsAdmin"]) { %>
+                    <a href="Users.aspx">Users</a>
+                <% } %>
             </nav>
         </div>
     </header>

@@ -29,13 +29,22 @@
                 <a href="About.aspx">About</a>
                 <a href="Contact.aspx">Contact</a>
                 <a href="Services.aspx">Services</a>
+                <% if (Session["IsAdmin"] is bool && (bool)Session["IsAdmin"]) { %>
+                    <a href="Users.aspx">Users</a>
+                <% } %>
             </nav>
         </div>
     </header>
 
     <main class="container">
         <% if (Session["CurrentUser"] != null) { %>
-            <p>Signed in as <strong><%= Server.HtmlEncode(Session["CurrentUser"].ToString()) %></strong> - <a href="HomePage.aspx?logout=1">Logout</a></p>
+            <p>
+                Signed in as <strong><%= Server.HtmlEncode(Session["CurrentUser"].ToString()) %></strong>
+                - <a href="HomePage.aspx?logout=1">Logout</a>
+                <% if (Session["IsAdmin"] is bool && (bool)Session["IsAdmin"]) { %>
+                    - <a href="Users.aspx">Users page</a>
+                <% } %>
+            </p>
         <% } else { %>
             <p><a href="Login.aspx">Login</a> or <a href="Registration.aspx">create an account</a>.</p>
         <% } %>
