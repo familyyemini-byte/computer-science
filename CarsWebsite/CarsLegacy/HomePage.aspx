@@ -1,3 +1,4 @@
+<%@ Page Language="C#" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,6 +25,7 @@
             <nav>
                 <a href="HomePage.aspx">Home</a>
                 <a href="Registration.aspx">Register</a>
+                <a href="Login.aspx">Login</a>
                 <a href="About.aspx">About</a>
                 <a href="Contact.aspx">Contact</a>
                 <a href="Services.aspx">Services</a>
@@ -32,6 +34,12 @@
     </header>
 
     <main class="container">
+        <% if (Session["CurrentUser"] != null) { %>
+            <p>Signed in as <strong><%= Server.HtmlEncode(Session["CurrentUser"].ToString()) %></strong> - <a href="HomePage.aspx?logout=1">Logout</a></p>
+        <% } else { %>
+            <p><a href="Login.aspx">Login</a> or <a href="Registration.aspx">create an account</a>.</p>
+        <% } %>
+
         <h2>Welcome to the Mini Site</h2>
         <p>This is the home page. Use the navigation menu to visit other pages on the site.</p>
 
@@ -53,3 +61,16 @@
     </footer>
 </body>
 </html>
+
+<script runat="server">
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (string.Equals(Request.QueryString["logout"], "1", StringComparison.Ordinal))
+        {
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("HomePage.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
+        }
+    }
+</script>

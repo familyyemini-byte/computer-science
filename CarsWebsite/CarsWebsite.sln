@@ -2,8 +2,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cars", "Cars\Cars.csproj", "{98048735-5C0E-40B0-A042-2FE68AA63BEB}"
-EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CarsLegacy", "CarsLegacy\", "{954D293D-99BA-1C8A-25B9-638B7879F009}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
@@ -22,6 +20,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CarsLegacy", "CarsLegacy\",
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "51590"
+		SlnRelativePath = "CarsLegacy\"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
@@ -31,10 +30,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{98048735-5C0E-40B0-A042-2FE68AA63BEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{98048735-5C0E-40B0-A042-2FE68AA63BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{98048735-5C0E-40B0-A042-2FE68AA63BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{98048735-5C0E-40B0-A042-2FE68AA63BEB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{954D293D-99BA-1C8A-25B9-638B7879F009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{954D293D-99BA-1C8A-25B9-638B7879F009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{954D293D-99BA-1C8A-25B9-638B7879F009}.Release|Any CPU.ActiveCfg = Debug|Any CPU

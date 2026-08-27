@@ -1,3 +1,4 @@
+<%@ Page Language="C#" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +13,7 @@
             <nav>
                 <a href="HomePage.aspx">Home</a>
                 <a href="Registration.aspx">Register</a>
+                <a href="Login.aspx">Login</a>
                 <a href="About.aspx">About</a>
                 <a href="Contact.aspx">Contact</a>
                 <a href="Services.aspx">Services</a>
@@ -23,73 +25,72 @@
     <h2>Registration</h2>
     <p>Please fill in the form to create an account.</p>
 
-    <form id="registrationForm" name="registrationForm">
+    <form id="registrationForm" runat="server">
         <table>
             <tr>
                 <td><label for="FirstName" id="LabelFirstName" name="LabelFirstName">First name</label></td>
-                <td><input type="text" id="FirstName" name="FirstName" /></td>
+                <td><asp:TextBox ID="FirstName" runat="server" /></td>
             </tr>
             <tr>
                 <td><label for="LastName" id="LabelLastName" name="LabelLastName">Last name</label></td>
-                <td><input type="text" id="LastName" name="LastName" /></td>
+                <td><asp:TextBox ID="LastName" runat="server" /></td>
             </tr>
             <tr>
                 <td><label for="Username" id="LabelUsername" name="LabelUsername">Username (user id)</label></td>
-                <td><input type="text" id="Username" name="Username" /></td>
+                <td><asp:TextBox ID="Username" runat="server" /></td>
             </tr>
             <tr>
                 <td><label for="Password" id="LabelPassword" name="LabelPassword">Password</label></td>
-                <td><input type="password" id="Password" name="Password" /></td>
+                <td><asp:TextBox ID="Password" runat="server" TextMode="Password" /></td>
             </tr>
             <tr>
                 <td><label for="ConfirmPassword" id="LabelConfirmPassword" name="LabelConfirmPassword">Password confirmation</label></td>
-                <td><input type="password" id="ConfirmPassword" name="ConfirmPassword" /></td>
+                <td><asp:TextBox ID="ConfirmPassword" runat="server" TextMode="Password" /></td>
             </tr>
             <tr>
                 <td><label for="Email" id="LabelEmail" name="LabelEmail">Email</label></td>
-                <td><input type="email" id="Email" name="Email" /></td>
+                <td><asp:TextBox ID="Email" runat="server" TextMode="Email" /></td>
             </tr>
             <tr>
                 <td><label for="YearOfBirth" id="LabelYearOfBirth" name="LabelYearOfBirth">Year of birth</label></td>
-                <td><input type="number" id="YearOfBirth" name="YearOfBirth" min="1900" max="2025" /></td>
+                <td><asp:TextBox ID="YearOfBirth" runat="server" TextMode="Number" /></td>
             </tr>
             <tr>
                 <td><label id="LabelGender" name="LabelGender">Gender</label></td>
                 <td>
                     <div class="radio-group">
-                        <label class="radio-item" for="GenderMale">
-                            <input type="radio" id="GenderMale" name="Gender" value="Male" checked />
-                            <span>Male</span>
-                        </label>
-                        <label class="radio-item" for="GenderFemale">
-                            <input type="radio" id="GenderFemale" name="Gender" value="Female" />
-                            <span>Female</span>
-                        </label>
-                        
+                        <asp:RadioButtonList ID="Gender" runat="server" RepeatDirection="Horizontal">
+                            <asp:ListItem Value="Male" Selected="True">Male</asp:ListItem>
+                            <asp:ListItem Value="Female">Female</asp:ListItem>
+                        </asp:RadioButtonList>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td><label for="Area" id="LabelArea" name="LabelArea">Area of residence</label></td>
                 <td>
-                    <select id="Area" name="Area">
-                        <option id="AreaNorth" name="AreaNorth" value="North">North</option>
-                        <option id="AreaSouth" name="AreaSouth" value="South">South</option>
-                        <option id="AreaCenter" name="AreaCenter" value="Center">Center</option>
-                        <option id="AreaAbroad" name="AreaAbroad" value="Abroad">Abroad</option>
-                    </select>
+                    <asp:DropDownList ID="Area" runat="server">
+                        <asp:ListItem Value="North">North</asp:ListItem>
+                        <asp:ListItem Value="South">South</asp:ListItem>
+                        <asp:ListItem Value="Center">Center</asp:ListItem>
+                        <asp:ListItem Value="Abroad">Abroad</asp:ListItem>
+                    </asp:DropDownList>
                 </td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align:right;">
-                    <input type="submit" id="Submit" name="Submit" value="Submit" />
+                    <asp:Button ID="Submit" runat="server" Text="Submit" OnClick="RegisterButton_Click" />
                     <input type="reset" id="Clear" name="Clear" value="Clear" class="clear" />
                 </td>
             </tr>
         </table>
+
+        <p>
+            <asp:Label ID="StatusMessage" runat="server" />
+        </p>
     </form>
 
-    <p style="font-size:0.9rem;color:#666;margin-top:1rem;">Notes: Radio buttons and dropdown list are included as required. Each input/select has matching `id` and `name` (radio buttons share the same name `Gender` to group them).</p>
+    <p style="font-size:0.9rem;color:#666;margin-top:1rem;">Your account is saved to the site database and can be used on the login page.</p>
 
     </main>
 
@@ -100,3 +101,50 @@
     </footer>
 </body>
 </html>
+
+<script runat="server">
+    protected void RegisterButton_Click(object sender, EventArgs e)
+    {
+        var firstName = (FirstName.Text ?? string.Empty).Trim();
+        var lastName = (LastName.Text ?? string.Empty).Trim();
+        var username = (Username.Text ?? string.Empty).Trim();
+        var password = Password.Text ?? string.Empty;
+        var confirmPassword = ConfirmPassword.Text ?? string.Empty;
+        var email = (Email.Text ?? string.Empty).Trim();
+        var gender = (Gender.SelectedValue ?? string.Empty).Trim();
+        var area = (Area.SelectedValue ?? string.Empty).Trim();
+
+        int yearOfBirth;
+        if (string.IsNullOrWhiteSpace(firstName) ||
+            string.IsNullOrWhiteSpace(lastName) ||
+            string.IsNullOrWhiteSpace(username) ||
+            string.IsNullOrWhiteSpace(password) ||
+            string.IsNullOrWhiteSpace(email) ||
+            !int.TryParse(YearOfBirth.Text, out yearOfBirth))
+        {
+            StatusMessage.Text = "Please fill all required fields correctly.";
+            StatusMessage.ForeColor = System.Drawing.Color.Firebrick;
+            return;
+        }
+
+        if (!string.Equals(password, confirmPassword, StringComparison.Ordinal))
+        {
+            StatusMessage.Text = "Password and confirmation do not match.";
+            StatusMessage.ForeColor = System.Drawing.Color.Firebrick;
+            return;
+        }
+
+        var repo = new AuthRepository();
+        string errorMessage;
+        var success = repo.RegisterUser(firstName, lastName, username, password, email, yearOfBirth, gender, area, out errorMessage);
+        if (!success)
+        {
+            StatusMessage.Text = string.IsNullOrWhiteSpace(errorMessage) ? "Registration failed." : errorMessage;
+            StatusMessage.ForeColor = System.Drawing.Color.Firebrick;
+            return;
+        }
+
+        StatusMessage.Text = "Registration successful. You can now login.";
+        StatusMessage.ForeColor = System.Drawing.Color.SeaGreen;
+    }
+</script>
