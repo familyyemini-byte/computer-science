@@ -28,7 +28,7 @@
         <form id="loginForm" runat="server">
             <table>
                 <tr>
-                    <td><label for="Username">Username</label></td>
+                    <td><label for="Username">Email</label></td>
                     <td><asp:TextBox ID="Username" runat="server" /></td>
                 </tr>
                 <tr>
@@ -59,27 +59,27 @@
 <script runat="server">
     protected void SignIn_Click(object sender, EventArgs e)
     {
-        var username = (Username.Text ?? string.Empty).Trim();
+        var email = (Username.Text ?? string.Empty).Trim();
         var password = Password.Text ?? string.Empty;
 
-        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
         {
-            StatusMessage.Text = "Please enter both username and password.";
+            StatusMessage.Text = "Please enter both email and password.";
             StatusMessage.ForeColor = System.Drawing.Color.Firebrick;
             return;
         }
 
         var repo = new AuthRepository();
         string fullName;
-        var success = repo.ValidateUser(username, password, out fullName);
+        var success = repo.ValidateUser(email, password, out fullName);
         if (!success)
         {
-            StatusMessage.Text = "Invalid username or password.";
+            StatusMessage.Text = "Invalid email or password.";
             StatusMessage.ForeColor = System.Drawing.Color.Firebrick;
             return;
         }
 
-        Session["CurrentUser"] = string.IsNullOrWhiteSpace(fullName) ? username : fullName;
+        Session["CurrentUser"] = string.IsNullOrWhiteSpace(fullName) ? email : fullName;
         Response.Redirect("HomePage.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }

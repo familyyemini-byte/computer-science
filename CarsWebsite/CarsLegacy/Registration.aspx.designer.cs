@@ -8,13 +8,11 @@ public partial class Registration
 {
     protected global::System.Web.UI.WebControls.TextBox FirstName;
     protected global::System.Web.UI.WebControls.TextBox LastName;
-    protected global::System.Web.UI.WebControls.TextBox Username;
     protected global::System.Web.UI.WebControls.TextBox Password;
     protected global::System.Web.UI.WebControls.TextBox ConfirmPassword;
     protected global::System.Web.UI.WebControls.TextBox Email;
     protected global::System.Web.UI.WebControls.TextBox YearOfBirth;
     protected global::System.Web.UI.WebControls.RadioButtonList Gender;
-    protected global::System.Web.UI.WebControls.DropDownList Area;
     protected global::System.Web.UI.WebControls.Button Submit;
     protected global::System.Web.UI.WebControls.Label StatusMessage;
 }

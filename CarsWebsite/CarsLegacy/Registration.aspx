@@ -36,10 +36,6 @@
                 <td><asp:TextBox ID="LastName" runat="server" /></td>
             </tr>
             <tr>
-                <td><label for="Username" id="LabelUsername" name="LabelUsername">Username (user id)</label></td>
-                <td><asp:TextBox ID="Username" runat="server" /></td>
-            </tr>
-            <tr>
                 <td><label for="Password" id="LabelPassword" name="LabelPassword">Password</label></td>
                 <td><asp:TextBox ID="Password" runat="server" TextMode="Password" /></td>
             </tr>
@@ -64,17 +60,6 @@
                             <asp:ListItem Value="Female">Female</asp:ListItem>
                         </asp:RadioButtonList>
                     </div>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="Area" id="LabelArea" name="LabelArea">Area of residence</label></td>
-                <td>
-                    <asp:DropDownList ID="Area" runat="server">
-                        <asp:ListItem Value="North">North</asp:ListItem>
-                        <asp:ListItem Value="South">South</asp:ListItem>
-                        <asp:ListItem Value="Center">Center</asp:ListItem>
-                        <asp:ListItem Value="Abroad">Abroad</asp:ListItem>
-                    </asp:DropDownList>
                 </td>
             </tr>
             <tr>

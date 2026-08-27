@@ -6,24 +6,15 @@ public partial class Registration : System.Web.UI.Page
     {
         var firstName = (FirstName.Text ?? string.Empty).Trim();
         var lastName = (LastName.Text ?? string.Empty).Trim();
-        var username = (Username.Text ?? string.Empty).Trim();
         var password = Password.Text ?? string.Empty;
         var confirmPassword = ConfirmPassword.Text ?? string.Empty;
         var email = (Email.Text ?? string.Empty).Trim();
         var gender = (Gender.SelectedValue ?? string.Empty).Trim();
-        var area = (Area.SelectedValue ?? string.Empty).Trim();
 
         int yearOfBirth;
-        string sql = "select * from users where email='" + email + "'";
-
-        if(DalBll.IsExist(sql))
-        {
-
-        } 
 
         if (string.IsNullOrWhiteSpace(firstName) ||
             string.IsNullOrWhiteSpace(lastName) ||
-            string.IsNullOrWhiteSpace(username) ||
             string.IsNullOrWhiteSpace(password) ||
             string.IsNullOrWhiteSpace(email) ||
             !int.TryParse(YearOfBirth.Text, out yearOfBirth))
@@ -40,9 +31,18 @@ public partial class Registration : System.Web.UI.Page
             return;
         }
 
+        var safeEmail = email.Replace("'", "''");
+        var sql = "select * from users where email='" + safeEmail + "'";
+        if (DalBll.IsExist(sql))
+        {
+            StatusMessage.Text = "User already exists.";
+            StatusMessage.ForeColor = System.Drawing.Color.Firebrick;
+            return;
+        }
+
         var repo = new AuthRepository();
         string errorMessage;
-        var success = repo.RegisterUser(firstName, lastName, username, password, email, yearOfBirth, gender, area, out errorMessage);
+        var success = repo.RegisterUser(firstName, lastName, password, email, yearOfBirth, gender, out errorMessage);
         if (!success)
         {
             StatusMessage.Text = string.IsNullOrWhiteSpace(errorMessage) ? "Registration failed." : errorMessage;
