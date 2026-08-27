@@ -1,4 +1,5 @@
 using System;
+using System;
 
 public partial class Registration : System.Web.UI.Page
 {
@@ -50,7 +51,14 @@ public partial class Registration : System.Web.UI.Page
             return;
         }
 
-        StatusMessage.Text = "Registration successful. You can now login.";
-        StatusMessage.ForeColor = System.Drawing.Color.SeaGreen;
+        Session["CurrentUser"] = string.Format("{0} {1}", firstName, lastName).Trim();
+        Session["CurrentUserEmail"] = email;
+
+        var isAdmin = repo.IsUserAdmin(email);
+        Session["IsAdmin"] = isAdmin;
+
+        RegistrationFormPanel.Visible = false;
+        PostRegisterPanel.Visible = true;
+        AdminUsersLinkPlaceholder.Visible = isAdmin;
     }
 }

@@ -1,31 +1,13 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Registration.aspx.cs" Inherits="Registration" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Registration - Mini Site</title>
-    <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-    <header>
-        <div class="container">
-            <nav>
-                <a href="HomePage.aspx">Home</a>
-                <a href="Registration.aspx">Register</a>
-                <a href="Login.aspx">Login</a>
-                <a href="About.aspx">About</a>
-                <a href="Contact.aspx">Contact</a>
-                <a href="Services.aspx">Services</a>
-            </nav>
-        </div>
-    </header>
+<%@ Page Language="C#" MasterPageFile="~/master.master" AutoEventWireup="true" CodeFile="Registration.aspx.cs" Inherits="Registration" %>
+<asp:Content ID="TitleContent1" ContentPlaceHolderID="TitleContent" runat="server">
+    Registration - Mini Site
+</asp:Content>
 
-    <main class="container">
+<asp:Content ID="MainContent1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Registration</h2>
     <p>Please fill in the form to create an account.</p>
 
-    <form id="registrationForm" runat="server">
+    <asp:Panel ID="RegistrationFormPanel" runat="server">
         <table>
             <tr>
                 <td><label for="FirstName" id="LabelFirstName" name="LabelFirstName">First name</label></td>
@@ -73,18 +55,20 @@
         <p>
             <asp:Label ID="StatusMessage" runat="server" />
         </p>
-    </form>
+    </asp:Panel>
+
+    <asp:Panel ID="PostRegisterPanel" runat="server" Visible="false">
+        <p>????? ?????? ????.</p>
+        <p>
+            <a href="ChangePassword.aspx">????? ?????</a> |
+            <a href="Logout.aspx">???????</a>
+            <asp:PlaceHolder ID="AdminUsersLinkPlaceholder" runat="server" Visible="false">
+                | <a href="Users.aspx">?? ???????</a>
+            </asp:PlaceHolder>
+        </p>
+    </asp:Panel>
 
     <p style="font-size:0.9rem;color:#666;margin-top:1rem;">Your account is saved to the site database and can be used on the login page.</p>
-
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Mini Site</p>
-        </div>
-    </footer>
-</body>
-</html>
+</asp:Content>
 
 

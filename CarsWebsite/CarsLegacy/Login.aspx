@@ -80,6 +80,8 @@
         }
 
         Session["CurrentUser"] = string.IsNullOrWhiteSpace(fullName) ? email : fullName;
+        Session["CurrentUserEmail"] = email;
+        Session["IsAdmin"] = repo.IsUserAdmin(email);
         Response.Redirect("HomePage.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }

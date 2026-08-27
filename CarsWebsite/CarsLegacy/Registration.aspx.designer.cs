@@ -6,6 +6,7 @@
 
 public partial class Registration
 {
+    protected global::System.Web.UI.WebControls.Panel RegistrationFormPanel;
     protected global::System.Web.UI.WebControls.TextBox FirstName;
     protected global::System.Web.UI.WebControls.TextBox LastName;
     protected global::System.Web.UI.WebControls.TextBox Password;
@@ -15,4 +16,6 @@ public partial class Registration
     protected global::System.Web.UI.WebControls.RadioButtonList Gender;
     protected global::System.Web.UI.WebControls.Button Submit;
     protected global::System.Web.UI.WebControls.Label StatusMessage;
+    protected global::System.Web.UI.WebControls.Panel PostRegisterPanel;
+    protected global::System.Web.UI.WebControls.PlaceHolder AdminUsersLinkPlaceholder;
 }

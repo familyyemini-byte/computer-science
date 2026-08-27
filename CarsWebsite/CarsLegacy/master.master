@@ -33,6 +33,27 @@
                     <a href="Contact.aspx">Contact</a>
                     <a href="Services.aspx">Services</a>
                 </nav>
+
+                <asp:Panel ID="MasterLoginPanel" runat="server">
+                    <asp:TextBox ID="MasterEmailTextBox" runat="server" TextMode="Email" placeholder="Email" />
+                    <asp:TextBox ID="MasterPasswordTextBox" runat="server" TextMode="Password" placeholder="Password" />
+                    <asp:Button ID="MasterLoginButton" runat="server" Text="Login" OnClick="MasterLoginButton_Click" />
+                    <asp:Label ID="MasterLoginStatusLabel" runat="server" />
+                </asp:Panel>
+
+                <asp:Panel ID="MasterUserPanel" runat="server" Visible="false">
+                    <p>
+                        ????,
+                        <asp:Literal ID="MasterUserNameLiteral" runat="server" />
+                        |
+                        <a href="ChangePassword.aspx">????? ?????</a>
+                        |
+                        <a href="Logout.aspx">???????</a>
+                        <asp:PlaceHolder ID="MasterUsersPageLinkPlaceholder" runat="server" Visible="false">
+                            | <a href="Users.aspx">?? ???????</a>
+                        </asp:PlaceHolder>
+                    </p>
+                </asp:Panel>
             </div>
         </header>
 
@@ -49,4 +70,60 @@
     </form>
 </body>
 </html>
+
+<script runat="server">
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        BindLoginState();
+    }
+
+    protected void MasterLoginButton_Click(object sender, EventArgs e)
+    {
+        var email = (MasterEmailTextBox.Text ?? string.Empty).Trim();
+        var password = MasterPasswordTextBox.Text ?? string.Empty;
+
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        {
+            MasterLoginStatusLabel.Text = "Please enter both email and password.";
+            MasterLoginStatusLabel.ForeColor = System.Drawing.Color.Firebrick;
+            return;
+        }
+
+        var repo = new AuthRepository();
+        string fullName;
+        var success = repo.ValidateUser(email, password, out fullName);
+        if (!success)
+        {
+            MasterLoginStatusLabel.Text = "Invalid email or password.";
+            MasterLoginStatusLabel.ForeColor = System.Drawing.Color.Firebrick;
+            return;
+        }
+
+        Session["CurrentUser"] = string.IsNullOrWhiteSpace(fullName) ? email : fullName;
+        Session["CurrentUserEmail"] = email;
+
+        Session["IsAdmin"] = repo.IsUserAdmin(email);
+
+        Response.Redirect(Request.RawUrl, false);
+        Context.ApplicationInstance.CompleteRequest();
+    }
+
+    private void BindLoginState()
+    {
+        var currentUser = Session["CurrentUser"] as string;
+        var isSignedIn = !string.IsNullOrWhiteSpace(currentUser);
+
+        MasterLoginPanel.Visible = !isSignedIn;
+        MasterUserPanel.Visible = isSignedIn;
+
+        if (!isSignedIn)
+        {
+            return;
+        }
+
+        MasterUserNameLiteral.Text = Server.HtmlEncode(currentUser);
+        var isAdmin = Session["IsAdmin"] is bool && (bool)Session["IsAdmin"];
+        MasterUsersPageLinkPlaceholder.Visible = isAdmin;
+    }
+</script>
 

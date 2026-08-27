@@ -1,8 +1,7 @@
 using System;
+using System;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Security.Cryptography;
-using System.Text;
 
 public class AuthRepository
 {
@@ -17,6 +16,61 @@ public class AuthRepository
         }
     }
 
+    public bool IsUserAdmin(string email)
+    {
+        EnsureUsersTable();
+
+        const string sql = @"
+SELECT is_admin
+FROM dbo.Users
+WHERE Email = @Email;";
+
+        using (var connection = new SqlConnection(_connectionString))
+        using (var command = new SqlCommand(sql, connection))
+        {
+            command.Parameters.AddWithValue("@Email", email);
+
+            connection.Open();
+            var value = command.ExecuteScalar();
+            if (value == null || value == DBNull.Value)
+            {
+                return false;
+            }
+
+            return Convert.ToBoolean(value);
+        }
+    }
+
+    public bool ChangePassword(string email, string currentPassword, string newPassword, out string errorMessage)
+    {
+        errorMessage = string.Empty;
+
+        EnsureUsersTable();
+
+        const string sql = @"
+UPDATE dbo.Users
+SET [Password] = @NewPassword
+WHERE Email = @Email AND [Password] = @CurrentPassword;";
+
+        using (var connection = new SqlConnection(_connectionString))
+        using (var command = new SqlCommand(sql, connection))
+        {
+            command.Parameters.AddWithValue("@Email", email);
+            command.Parameters.AddWithValue("@CurrentPassword", currentPassword);
+            command.Parameters.AddWithValue("@NewPassword", newPassword);
+
+            connection.Open();
+            var rows = command.ExecuteNonQuery();
+            if (rows > 0)
+            {
+                return true;
+            }
+        }
+
+        errorMessage = "Current password is incorrect.";
+        return false;
+    }
+
     public bool RegisterUser(string firstName, string lastName, string password, string email, int yearOfBirth, string gender, out string errorMessage)
     {
         errorMessage = string.Empty;
@@ -25,9 +79,9 @@ public class AuthRepository
 
         const string sql = @"
 INSERT INTO dbo.Users
-    (FirstName, LastName, PasswordHash, Email, YearOfBirth, Gender, CreatedAt)
+    (FirstName, LastName, [Password], Email, YearOfBirth, Gender, CreatedAt)
 VALUES
-    (@FirstName, @LastName, @PasswordHash, @Email, @YearOfBirth, @Gender, @CreatedAt);";
+    (@FirstName, @LastName, @Password, @Email, @YearOfBirth, @Gender, @CreatedAt);";
 
         try
         {
@@ -36,7 +90,7 @@ VALUES
             {
                 command.Parameters.AddWithValue("@FirstName", firstName);
                 command.Parameters.AddWithValue("@LastName", lastName);
-                command.Parameters.AddWithValue("@PasswordHash", HashPassword(password));
+                command.Parameters.AddWithValue("@Password", password);
                 command.Parameters.AddWithValue("@Email", email);
                 command.Parameters.AddWithValue("@YearOfBirth", yearOfBirth);
                 command.Parameters.AddWithValue("@Gender", gender);
@@ -63,13 +117,13 @@ VALUES
         const string sql = @"
 SELECT FirstName, LastName
 FROM dbo.Users
-WHERE Email = @Email AND PasswordHash = @PasswordHash;";
+WHERE Email = @Email AND [Password] = @Password;";
 
         using (var connection = new SqlConnection(_connectionString))
         using (var command = new SqlCommand(sql, connection))
         {
             command.Parameters.AddWithValue("@Email", email);
-            command.Parameters.AddWithValue("@PasswordHash", HashPassword(password));
+            command.Parameters.AddWithValue("@Password", password);
 
             connection.Open();
             using (var reader = command.ExecuteReader())
@@ -95,8 +149,9 @@ BEGIN
         Id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
         FirstName NVARCHAR(100) NOT NULL,
         LastName NVARCHAR(100) NOT NULL,
-        PasswordHash NVARCHAR(128) NOT NULL,
+        [Password] NVARCHAR(128) NOT NULL,
         Email NVARCHAR(255) NOT NULL,
+        is_admin BIT NOT NULL CONSTRAINT DF_Users_is_admin DEFAULT (0),
         YearOfBirth INT NOT NULL,
         Gender NVARCHAR(20) NOT NULL,
         CreatedAt DATETIME2 NOT NULL
@@ -122,6 +177,32 @@ BEGIN
         ALTER TABLE dbo.Users DROP COLUMN Area;
     END
 
+    IF COL_LENGTH('dbo.Users', 'Password') IS NULL AND COL_LENGTH('dbo.Users', 'PasswordHash') IS NOT NULL
+    BEGIN
+        EXEC sp_rename 'dbo.Users.PasswordHash', 'Password', 'COLUMN';
+    END
+
+    IF COL_LENGTH('dbo.Users', 'Password') IS NULL
+    BEGIN
+        ALTER TABLE dbo.Users ADD [Password] NVARCHAR(128) NOT NULL CONSTRAINT DF_Users_Password DEFAULT ('');
+    END
+
+    IF COL_LENGTH('dbo.Users', 'PasswordHash') IS NOT NULL
+    BEGIN
+        ALTER TABLE dbo.Users DROP COLUMN PasswordHash;
+    END
+
+    IF COL_LENGTH('dbo.Users', 'is_admin') IS NULL
+    BEGIN
+        ALTER TABLE dbo.Users ADD is_admin BIT NOT NULL CONSTRAINT DF_Users_is_admin DEFAULT (0);
+    END
+
+    UPDATE dbo.Users
+    SET is_admin = 1
+    WHERE LOWER(FirstName) = 'nadav'
+       OR LOWER(Email) = 'nadav'
+       OR LOWER(Email) LIKE 'nadav@%';
+
     IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'UX_Users_Email' AND object_id = OBJECT_ID('dbo.Users'))
     BEGIN
         CREATE UNIQUE INDEX UX_Users_Email ON dbo.Users(Email);
@@ -136,19 +217,4 @@ END";
         }
     }
 
-    private static string HashPassword(string password)
-    {
-        using (var sha = SHA256.Create())
-        {
-            var bytes = Encoding.UTF8.GetBytes(password ?? string.Empty);
-            var hash = sha.ComputeHash(bytes);
-            var builder = new StringBuilder(hash.Length * 2);
-            for (var i = 0; i < hash.Length; i++)
-            {
-                builder.Append(hash[i].ToString("x2"));
-            }
-
-            return builder.ToString();
-        }
-    }
 }
