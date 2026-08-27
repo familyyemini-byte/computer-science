@@ -14,6 +14,13 @@ public partial class Registration : System.Web.UI.Page
         var area = (Area.SelectedValue ?? string.Empty).Trim();
 
         int yearOfBirth;
+        string sql = "select * from users where email='" + email + "'";
+
+        if(DalBll.IsExist(sql))
+        {
+
+        } 
+
         if (string.IsNullOrWhiteSpace(firstName) ||
             string.IsNullOrWhiteSpace(lastName) ||
             string.IsNullOrWhiteSpace(username) ||
