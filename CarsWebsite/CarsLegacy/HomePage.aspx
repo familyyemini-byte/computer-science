@@ -24,8 +24,13 @@
             </div>
             <nav>
                 <a href="HomePage.aspx">Home</a>
-                <a href="Registration.aspx">Register</a>
-                <a href="Login.aspx">Login</a>
+                <% if (Session["CurrentUser"] == null) { %>
+                    <a href="Registration.aspx">Register</a>
+                    <a href="Login.aspx">Login</a>
+                <% } else { %>
+                    <a href="ChangePassword.aspx">Change password</a>
+                    <a href="Logout.aspx">Logout</a>
+                <% } %>
                 <a href="About.aspx">About</a>
                 <a href="Contact.aspx">Contact</a>
                 <a href="Services.aspx">Services</a>
@@ -79,6 +84,13 @@
             Session.Clear();
             Session.Abandon();
             Response.Redirect("HomePage.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
+            return;
+        }
+
+        if (Session["CurrentUser"] == null)
+        {
+            Response.Redirect("Login.aspx?returnUrl=HomePage.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
         }
     }

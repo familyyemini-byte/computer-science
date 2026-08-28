@@ -1,3 +1,10 @@
+<%@ Page Language="C#" %>
+<%
+    if (Session["CurrentUser"] == null)
+    {
+        Response.Redirect("Login.aspx?returnUrl=Services.aspx");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +18,19 @@
         <div class="container">
             <nav>
                 <a href="HomePage.aspx">Home</a>
-                <a href="Registration.aspx">Register</a>
+                <% if (Session["CurrentUser"] == null) { %>
+                    <a href="Registration.aspx">Register</a>
+                    <a href="Login.aspx">Login</a>
+                <% } else { %>
+                    <a href="ChangePassword.aspx">Change password</a>
+                    <a href="Logout.aspx">Logout</a>
+                <% } %>
                 <a href="About.aspx">About</a>
                 <a href="Contact.aspx">Contact</a>
                 <a href="Services.aspx">Services</a>
+                <% if (Session["IsAdmin"] is bool && (bool)Session["IsAdmin"]) { %>
+                    <a href="Users.aspx">Users</a>
+                <% } %>
             </nav>
         </div>
     </header>

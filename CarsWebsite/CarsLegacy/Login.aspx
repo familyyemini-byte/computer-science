@@ -60,6 +60,15 @@
 </html>
 
 <script runat="server">
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Session["CurrentUser"] != null)
+        {
+            Response.Redirect("HomePage.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
+        }
+    }
+
     protected void SignIn_Click(object sender, EventArgs e)
     {
         var email = (Username.Text ?? string.Empty).Trim();
@@ -85,6 +94,7 @@
         Session["CurrentUser"] = string.IsNullOrWhiteSpace(fullName) ? email : fullName;
         Session["CurrentUserEmail"] = email;
         Session["IsAdmin"] = repo.IsUserAdmin(email);
+
         Response.Redirect("HomePage.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }

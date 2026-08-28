@@ -4,19 +4,19 @@
 </asp:Content>
 
 <asp:Content ID="MainContent1" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>????? ?????</h2>
+    <h2>Change Password</h2>
     <table>
         <tr>
-            <td><label for="CurrentPasswordTextBox">????? ??????</label></td>
+            <td><label for="CurrentPasswordTextBox">Current password</label></td>
             <td><asp:TextBox ID="CurrentPasswordTextBox" runat="server" TextMode="Password" /></td>
         </tr>
         <tr>
-            <td><label for="NewPasswordTextBox">????? ????</label></td>
+            <td><label for="NewPasswordTextBox">New password</label></td>
             <td><asp:TextBox ID="NewPasswordTextBox" runat="server" TextMode="Password" /></td>
         </tr>
         <tr>
             <td colspan="2" style="text-align:right;">
-                <asp:Button ID="ChangePasswordButton" runat="server" Text="????" OnClick="ChangePasswordButton_Click" />
+                <asp:Button ID="ChangePasswordButton" runat="server" Text="Update" OnClick="ChangePasswordButton_Click" />
             </td>
         </tr>
     </table>
@@ -28,7 +28,7 @@
     {
         if (Session["CurrentUserEmail"] == null)
         {
-            Response.Redirect("Registration.aspx", false);
+            Response.Redirect("Login.aspx?returnUrl=ChangePassword.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
         }
     }
@@ -41,7 +41,7 @@
 
         if (string.IsNullOrWhiteSpace(currentPassword) || string.IsNullOrWhiteSpace(newPassword))
         {
-            StatusLabel.Text = "?? ???? ?? ?? ?????.";
+            StatusLabel.Text = "Please fill in all fields.";
             StatusLabel.ForeColor = System.Drawing.Color.Firebrick;
             return;
         }
@@ -56,7 +56,7 @@
             return;
         }
 
-        StatusLabel.Text = "?????? ?????? ??????.";
+        StatusLabel.Text = "Password updated successfully.";
         StatusLabel.ForeColor = System.Drawing.Color.SeaGreen;
     }
 </script>

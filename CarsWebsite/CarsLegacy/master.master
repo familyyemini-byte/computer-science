@@ -28,8 +28,13 @@
 
                 <nav>
                     <a href="HomePage.aspx">Home</a>
-                    <a href="Registration.aspx">Register</a>
-                    <asp:HyperLink ID="MasterNavUsersLink" runat="server" NavigateUrl="~/Users.aspx" Visible="false">Users</asp:HyperLink>
+                    <% if (Session["CurrentUser"] == null) { %>
+                        <a href="Registration.aspx">Register</a>
+                        <a href="Login.aspx">Login</a>
+                    <% } %>
+                    <% if (Session["IsAdmin"] is bool && (bool)Session["IsAdmin"]) { %>
+                        <a href="Users.aspx">Users</a>
+                    <% } %>
                     <a href="About.aspx">About</a>
                     <a href="Contact.aspx">Contact</a>
                     <a href="Services.aspx">Services</a>
@@ -102,7 +107,7 @@
 
         Session["IsAdmin"] = repo.IsUserAdmin(email);
 
-        Response.Redirect(Request.RawUrl, false);
+        Response.Redirect("HomePage.aspx", false);
         Context.ApplicationInstance.CompleteRequest();
     }
 
@@ -120,8 +125,6 @@
         }
 
         MasterUserNameLiteral.Text = Server.HtmlEncode(currentUser);
-        var isAdmin = Session["IsAdmin"] is bool && (bool)Session["IsAdmin"];
-        MasterNavUsersLink.Visible = isAdmin;
     }
 </script>
 

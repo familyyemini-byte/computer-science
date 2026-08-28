@@ -3,6 +3,15 @@ using System;
 
 public partial class Registration : System.Web.UI.Page
 {
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Session["CurrentUser"] != null && !IsPostBack)
+        {
+            Response.Redirect("HomePage.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
+        }
+    }
+
     protected void RegisterButton_Click(object sender, EventArgs e)
     {
         var firstName = (FirstName.Text ?? string.Empty).Trim();

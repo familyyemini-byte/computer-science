@@ -23,6 +23,13 @@
 <script runat="server">
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["CurrentUser"] == null)
+        {
+            Response.Redirect("Login.aspx?returnUrl=Users.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
+            return;
+        }
+
         var isAdmin = Session["IsAdmin"] is bool && (bool)Session["IsAdmin"];
         if (!isAdmin)
         {
