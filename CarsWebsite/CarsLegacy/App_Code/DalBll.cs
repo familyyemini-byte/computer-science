@@ -12,7 +12,7 @@ public class DalBll
     //התחברות לבסיס נתונים תשפ
     public static SqlConnection GetConnection()
     {
-        string path = HttpContext.Current.Server.MapPath("~/App_Data/DataBase.mdf");
+        string path = HttpContext.Current.Server.MapPath("~/App_Data/DataBase2.mdf");
 
         //string connStr = string.Format(@"Data Source=(LocalDB)\v11.0;;AttachDbFilename={0};Integrated Security=True", path);
         string connStr = string.Format(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={0};Integrated Security=True", path);
