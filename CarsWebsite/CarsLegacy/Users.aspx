@@ -46,7 +46,8 @@
 
     private void BindUsers()
     {
-        var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["CarsDb"]?.ConnectionString;
+        var connectionSetting = System.Configuration.ConfigurationManager.ConnectionStrings["CarsDb"];
+        var connectionString = connectionSetting == null ? null : connectionSetting.ConnectionString;
         if (string.IsNullOrWhiteSpace(connectionString))
         {
             return;

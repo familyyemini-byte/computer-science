@@ -9,7 +9,8 @@ public class AuthRepository
 
     public AuthRepository()
     {
-        _connectionString = ConfigurationManager.ConnectionStrings["CarsDb"]?.ConnectionString;
+        var connectionSetting = ConfigurationManager.ConnectionStrings["CarsDb"];
+        _connectionString = connectionSetting == null ? null : connectionSetting.ConnectionString;
         if (string.IsNullOrWhiteSpace(_connectionString))
         {
             throw new InvalidOperationException("Missing CarsDb connection string in Web.config.");
@@ -101,10 +102,15 @@ VALUES
                 return true;
             }
         }
-        catch (SqlException ex) when (ex.Number == 2601 || ex.Number == 2627)
+        catch (SqlException ex)
         {
-            errorMessage = "Email already exists.";
-            return false;
+            if (ex.Number == 2601 || ex.Number == 2627)
+            {
+                errorMessage = "Email already exists.";
+                return false;
+            }
+
+            throw;
         }
     }
 
